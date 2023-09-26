@@ -16,9 +16,18 @@ $(document).ready(function(){
         $("#timer-value").html(timeLeft);
         startCountdown();
     })
+
+    $(".grid-item").click(function(){
+        if ($(this).children().eq(0).attr('src') == "mole.png"){
+            $(this).children().eq(0).attr('src', 'hole.png');
+            score++;
+            $("#score-value").html(score);
+        }
+    })
 })
 
 function startCountdown() {
+    $("#gameGrid").children().children().attr('src','hole.png');
     intervalID = setInterval(decrement, 1000);
 }
 
@@ -27,6 +36,7 @@ function decrement() {
     if(timeLeft <= 0){
         clearInterval(intervalID)
     }
+    $("#gameGrid").children().eq(timeLeft).children().attr('src','mole.png');
     $("#timer-value").html(timeLeft); 
 }
 
