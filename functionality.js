@@ -15,7 +15,7 @@ $(document).ready(function(){
         score = 0;
         $("#score-value").html(score);
         
-        timeLeft = 10;
+        timeLeft = 20;
         $("#timer-value").html(timeLeft);
         startCountdown();
     })
@@ -47,7 +47,7 @@ function decrement() {
 
 async function generateMoles() {
     
-    waitTime = Math.random() * (3000 - 500) + 500;
+    let waitTime = Math.random() * (3000 - 500) + 500;
     let promise = new Promise((resolve, reject) => {
         setTimeout(() => {
             spawnMole();
@@ -63,17 +63,29 @@ function spawnMole() {
     //filter my positions array to get the available ones
     let avail = positions.filter((pos) => pos >= 0)
     if (avail.length === 0 || timeLeft <= 0) return
+    
     //using length of the new array, randomly select one
     let index = Math.floor(Math.random() * avail.length);
     let swap = avail[index]
+    
     //swap from hole to mole
     $("#gameGrid").children().eq(swap).children().attr('src','mole.png');
-    //positions[swap] = -1
+    
     positions[swap] = -1
+
+    //trigger flipping back after a random amount of time
+    let waitTime = Math.random() * (3000 - 500) + 500;
+    setTimeout(swapBack, waitTime, swap)
+}
+
+function swapBack(swap) {
+    if (timeLeft <= 0) return
+    positions[swap] = swap
+    $("#gameGrid").children().eq(swap).children().attr('src','hole.png');
 }
 
 /**
  * TODO: 
- * - Make moles randomly swap/swap back with hole
+ * - Make moles swap back with hole
  *
  */
