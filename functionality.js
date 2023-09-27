@@ -2,6 +2,7 @@ let timeLeft;
 let intervalID = null;
 let score;
 let positions = [0,1,2,3,4,5,6,7,8];
+let gameID = -1;
 
 $(document).ready(function(){
     $("#reset-button").click(function(){
@@ -17,6 +18,8 @@ $(document).ready(function(){
         
         timeLeft = 20;
         $("#timer-value").html(timeLeft);
+
+        gameID++;
         startCountdown();
     })
 
@@ -41,22 +44,24 @@ function decrement() {
         clearInterval(intervalID)
         intervalID = null;
     }
-    //$("#gameGrid").children().eq(timeLeft).children().attr('src','mole.png');
+    
     $("#timer-value").html(timeLeft); 
 }
 
 async function generateMoles() {
     
-    let waitTime = Math.random() * (3000 - 500) + 500;
-    let promise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            spawnMole();
-            resolve("success");
-        }, waitTime)
-    });
-    let result = await promise;
-    
-    if (timeLeft > 0) generateMoles();
+    let currentGameID = gameID; // Store the current game ID
+    while (timeLeft > 0 && currentGameID === gameID) {
+        let waitTime = Math.random() * (3000 - 500) + 500;
+        await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (timeLeft > 0 && currentGameID === gameID) {
+                    spawnMole();
+                }
+                resolve("success");
+            }, waitTime);
+        });
+    }
 }
 
 function spawnMole() {
@@ -86,6 +91,7 @@ function swapBack(swap) {
 
 /**
  * TODO: 
- * - Make moles swap back with hole
+ * - Debug spamming reset
+ * - Show game is over
  *
  */
