@@ -10,6 +10,7 @@ $(document).ready(function(){
             clearInterval(intervalID)
         }
         $("#reset-button").html("Reset Game");
+        $('body').css('background-color', '#01893f');
 
         positions = [0,1,2,3,4,5,6,7,8];
 
@@ -43,6 +44,7 @@ function decrement() {
     if(timeLeft <= 0){
         clearInterval(intervalID)
         intervalID = null;
+        $('body').css('background-color', 'red');
     }
     
     $("#timer-value").html(timeLeft); 
@@ -51,6 +53,7 @@ function decrement() {
 async function generateMoles() {
     
     let currentGameID = gameID; // Store the current game ID
+
     while (timeLeft > 0 && currentGameID === gameID) {
         let waitTime = Math.random() * (3000 - 500) + 500;
         await new Promise((resolve, reject) => {
