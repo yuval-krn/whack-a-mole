@@ -1,10 +1,10 @@
-# A project from my UI Design course at Columbia University
+# Whack-a-mole
+
+This is a project from my UI Design course at Columbia University.
 
 I replicated the classic arcade game, whack-a-mole, using Javascript, HTML, and CSS.
 
-Through this project, I learned the fundamentals of async/await functions in Javascript.
-
-I also used jquery to interact with the DOM.
+Through this project, I learned the fundamentals of async/await functions in Javascript and used jquery to interact with the DOM.
 
 
 ## Getting started:
